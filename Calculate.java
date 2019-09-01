@@ -19,10 +19,10 @@ public class Calculate {
 		map.put('/', 2);
 		map.put('%', 2);
 		map.put('^', 3);
-		map.put('¡Ì', 3);
+		map.put('âˆš', 3);
 	}
 	
-	public String calculate(String form) {  //²»Êä³öºó×º±í´ïÊ½£¬Ö±½Ó¼ÆËã,1+(2-3*4^2)*5
+	public String calculate(String form) {  
 		if (checkError(form)) return "FormulaFormatError!";
 		for (int i = 0;i < form.length();i++) {
 			char c = form.charAt(i);
@@ -66,7 +66,7 @@ public class Calculate {
 					}
 					operation.pop();
 				}
-				else {//Èç¹ûÊÇÀ¨ºÅÒÔÍâµÄ·ûºÅ
+				else {//å¦‚æžœæ˜¯æ‹¬å·ä»¥å¤–çš„ç¬¦å·
 					while (!operation.isEmpty() && map.get(c) <= map.get(operation.peek())) {
 						operate(operation.pop(),nums);
 					}
@@ -108,14 +108,14 @@ public class Calculate {
 	}
 	
 	public boolean checkError(String form) {//return true when error or errors exist
-		//ÏÈ¼ì²éÀ¨ºÅÊÇ·ñÕýÈ·
+		//Check if the parenthesis are right and if elements except numbers and calculate signs appeared.
 		Stack<Character> stack = new Stack<>();
 		for (int i = 0;i < form.length();i++) {
 			char c = form.charAt(i);
 			if (c != '(' && c != ')') {
 				if (!Character.isDigit(c)) {
 					if (map.get(c) == null) {
-						return true;//ËµÃ÷³öÏÖÁËÊý×Ö¡¢ÔËËã·ûºÍÀ¨ºÅÒÔÍâµÄ¶«Î÷
+						return true;
 					}
 				}
 			}
@@ -134,10 +134,5 @@ public class Calculate {
 			}
 		}
 		return !stack.isEmpty();
-	}
-	
-	public static void main(String[] args) {
-		Calculate c = new Calculate();
-		System.out.println(c.calculate("(-3)*(-3)"));
 	}
 }
